@@ -149,14 +149,3 @@ pip install openpyxl
 
 ---
 
-## Integration
-
-Follows the same structural pattern as sibling projects:
-
-| Project | Source | Pattern |
-|---------|--------|---------|
-| `steen-vf1` | EPS 2015d.1 | `config + pipeline + indicators/` |
-| `uba1` | UBA Handbook MC 4.0 | `config + pipeline + tables/` |
-| `vf_cedelft` | CE Delft Handbook 2024 | `config + pipeline + tables/` |
-| `vf_valuingimpact` | eQALY (Valuing Impact) | `config + pipeline + indicators/` |
-| **`vf_uk`** | **HM Treasury / Frontier / OECD** | **`config + pipeline + tables/`** |
