@@ -1,0 +1,18 @@
+source_doc,parameter_category,parameter,value,unit,price_year,notes
+Workplace Wellbeing Tool Guide,working_time,standard_working_days_per_year,228,days/year,2011,5 days/week × 52 weeks − 32 days leave (UK standard)
+Workplace Wellbeing Tool Guide,working_time,standard_working_weeks_per_year,52,weeks/year,2011,Standard UK full-time assumption
+Workplace Wellbeing Tool Guide,costs_structure,non_wage_cost_factor,1.3,ratio,2011,"Non-wage costs ≈ 30% above gross wages (e.g. NI, pension, benefits)"
+Workplace Wellbeing Tool Example sheet 1c,costs_structure,example_average_wage,25000,GBP/year,2011,Example value; update to current average earnings for current appraisals
+Workplace Wellbeing Tool Guide,discount_rate,private_sector_nominal,7.0,percent_nominal,2011,Default in tool for private sector business case appraisal
+Workplace Wellbeing Tool Guide,discount_rate,public_sector_real,3.5,percent_real,2011,HM Treasury Green Book rate mentioned as public sector alternative
+Workplace Wellbeing Tool Example sheet 1c,cost_benchmark,labour_turnover_cost_per_departure,12500,GBP/departure,2011,"Example cost per employee turnover event (recruitment, onboarding, lost productivity)"
+Workplace Wellbeing Tool Example sheet 1c,cost_benchmark,accident_claim_average_cost,200,GBP/claim,2011,Example average cost per accident/injury insurance claim
+Workplace Wellbeing Tool Example sheet 2c,appraisal_example,net_present_value_5yr,13175.8,GBP,2011,Example 5-year NPV from sickness absence management project (10 employees)
+Workplace Wellbeing Tool Example sheet 2c,appraisal_example,benefit_to_cost_ratio,3.85,ratio,2011,BCR = discounted benefits ÷ discounted costs for example project
+Workplace Wellbeing Tool Example sheet 2c,appraisal_example,payback_period,0.77,years,2011,Approx. 9 months payback for example sickness absence management project
+Workplace Wellbeing Tool Example sheet 2c,appraisal_example,internal_rate_of_return,139.26,percent,2011,IRR for example project
+Workplace Wellbeing Tool Guide,cost_category,sickness_absence,1,category,2011,Working days lost to employee absence due to sickness or ill health
+Workplace Wellbeing Tool Guide,cost_category,presenteeism,1,category,2011,Lost output when employees are at work but functioning below full capacity
+Workplace Wellbeing Tool Guide,cost_category,labour_turnover,1,category,2011,Employee departures and associated recruitment/onboarding costs
+Workplace Wellbeing Tool Guide,cost_category,accidents_injuries,1,category,2011,"Workplace accidents, injuries and associated insurance/legal costs"
+Workplace Wellbeing Tool Guide,cost_category,other_costs,1,category,2011,"Customisable: ill-health retirement, private health insurance, grievances, etc."

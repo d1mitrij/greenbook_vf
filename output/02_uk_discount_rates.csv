@@ -1,0 +1,9 @@
+source_doc,rate_type,period_description,years_from,years_to,rate_pct,unit,notes
+HM Treasury Green Book 2026 Annex 6,STPR_standard,Years 1–30,1,30,3.5,percent_real_unless_noted,Social Time Preference Rate for standard public sector appraisal
+HM Treasury Green Book 2026 Annex 6,STPR_standard,Years 31–75,31,75,3.0,percent_real_unless_noted,Declining schedule for long-term appraisal
+HM Treasury Green Book 2026 Annex 6,STPR_standard,Year 76+,76,open,2.5,percent_real_unless_noted,Very long-term declining schedule
+HM Treasury Green Book 2026 / Wellbeing Guidance 2021,STPR_health_wellbeing,Years 0–30,0,30,1.5,percent_real_unless_noted,"Lower rate for QALYs, WELLBYs, life years — preserves intergenerational equity"
+HM Treasury Wellbeing Guidance 2021,STPR_health_wellbeing,Years 31–75,31,75,1.29,percent_real_unless_noted,Declining health discount rate (approx.)
+HM Treasury Wellbeing Guidance 2021,STPR_health_wellbeing,Year 76+,76,open,1.07,percent_real_unless_noted,Declining health discount rate (approx.)
+HM Treasury / PHE Workplace Wellbeing Tool (2011),private_sector_nominal,All years,0,open,7.0,percent_real_unless_noted,Nominal rate used in Workplace Wellbeing Tool (private sector reference)
+HM Treasury / PHE Workplace Wellbeing Tool (2011),public_sector_real,All years,0,open,3.5,percent_real_unless_noted,Real rate mentioned in Workplace Wellbeing Tool for public sector
