@@ -191,8 +191,8 @@ is richer in future years, so a WELLBY is worth more in nominal terms.
 | Parameter | Value | Source |
 |---|---|---|
 | Income elasticity ε | 1.3 | HM Treasury Green Book Annex 3 |
-| GDP deflator data | ONS GDP deflator series | HM Treasury |
-| GDP per capita data | ONS National Accounts | HM Treasury |
+| GDP deflator data | ONS GDP deflator series (OGL v3) | HM Treasury |
+| GDP per capita data | ONS National Accounts (OGL v3) | ONS |
 
 For large wellbeing changes (>0.5 life-satisfaction points), a Compensating Surplus
 formula replaces linear scaling to avoid overestimation of non-marginal changes.
@@ -216,15 +216,125 @@ research (Frijters & Krekel 2021), not a direct transfer. The Green Book uses QA
 (£70,000) and WELLBY (£13,000) as two parallel but distinct metrics — they should
 not be freely substituted without methodological justification.
 
-### 4.4 External sources per indicator
+---
 
-| Table group | Value technique | Primary external sources |
-|---|---|---|
-| `wellby_valuations` | Stated preference (WTP) + QALY anchor | OECD (2025) 60c1396c-en; Frijters & Krekel (2021); Fujiwara (2021) |
-| `discount_rates` | Social Time Preference Rate (Ramsey formula) | HM Treasury Green Book 2026; Stern (2006) |
-| `culture_health_per_person` | QALY: NICE/Green Book threshold; WELLBY: regression | NICE HTA; Taking Part Survey (DCMS); ELSA (IFS); regression models from English surveys |
-| `culture_health_societal` | Per-person × population count | Taking Part Survey; ELSA; ONS population data |
-| `workplace_wellbeing` | Cost accounting (NPV/BCR/IRR) | ONS labour statistics; NICE workplace evidence |
+## 4.4 External Sources for Value Transfer — License Detail
+
+Each source that enables or calibrates the value transfer mechanisms above is
+documented here with its precise license terms.
+
+### 4.4.1 HM Treasury Green Book — Income Elasticity and STPR
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | Marginal utility of income elasticity ε = 1.3 (temporal WELLBY uprating, Annex 3); Ramsey STPR formula and schedule (Annex 6); Compensating Surplus formula |
+| **Full citation** | HM Treasury (2026). *The Green Book: Central Government Guidance on Appraisal and Evaluation*. London: HM Treasury. |
+| **License** | **Open Government Licence v3.0 (OGL v3)** |
+| **Commercial use** | ✓ Yes |
+| **Attribution required** | Yes — "Contains public sector information licensed under the Open Government Licence v3.0. Source: HM Treasury, The Green Book, 2026." |
+| **Redistribution** | ✓ Free |
+| **License URL** | https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/ |
+
+---
+
+### 4.4.2 ONS — GDP Deflator and GDP per Capita
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | GDP deflator time series and GDP per capita (both required for WELLBY temporal uprating formula); average earnings for WELLBY high estimate (Wellbeing Guidance §2.2) |
+| **Full citation** | Office for National Statistics (ONS). *Consumer Price Indices; UK National Accounts (GDP per head); Annual Survey of Hours and Earnings (ASHE)*. Newport: ONS. https://www.ons.gov.uk |
+| **License** | **Open Government Licence v3.0 (OGL v3)** |
+| **Commercial use** | ✓ Yes |
+| **Attribution required** | Yes — "Source: Office for National Statistics licensed under the Open Government Licence v3.0" |
+| **Redistribution** | ✓ Free |
+| **License URL** | https://www.ons.gov.uk/help/termsandconditions |
+
+---
+
+### 4.4.3 OECD — Geographic Transfer Guidance (60c1396c-en)
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | Guidance for cross-country WELLBY transfer using income elasticity adjustment: `WELLBY_country = WELLBY_UK × (GDPpc_country / GDPpc_UK)^ε` |
+| **Full citation** | OECD (2025). *The WELLBY Well-being Valuation Method in the United Kingdom* (reference 60c1396c-en). OECD Publishing, Paris. |
+| **License** | **OECD Proprietary — All Rights Reserved** |
+| **Commercial use** | ✗ No — reproduction requires OECD written permission |
+| **Attribution required** | Yes — cite OECD with reference code 60c1396c-en |
+| **Redistribution** | ✗ Restricted; short quotation with attribution permitted for non-commercial use |
+| **Note** | Used in this pipeline for cross-reference only; no values exclusive to this document are extracted. |
+| **License URL** | https://www.oecd.org/en/about/terms-conditions.html |
+
+---
+
+### 4.4.4 Frijters & Krekel (2021) — QALY–WELLBY Calibration
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | `1 QALY ≈ 7 WELLBYs` calibration relationship underpinning the low WELLBY estimate (£10,000 = £70,000 QALY ÷ 7) |
+| **Full citation** | Frijters, P. and Krekel, C. (2021). *A Handbook for Wellbeing Policy-Making: History, Theory, Measurement, Implementation, and Examples*. Oxford: Oxford University Press. |
+| **License** | **CC BY-NC-ND 4.0** (Open Access on OAPEN / Oxford Academic) |
+| **Commercial use** | ✗ Non-commercial only |
+| **Derivatives** | ✗ No derivatives permitted |
+| **Attribution required** | Yes — cite Frijters & Krekel 2021 |
+| **Redistribution** | Non-commercial redistribution of the unmodified work permitted |
+| **License URL** | https://library.oapen.org/handle/20.500.12657/60760; https://creativecommons.org/licenses/by-nc-nd/4.0/ |
+
+---
+
+### 4.4.5 Stern (2006) — STPR and Ramsey Formula
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | Theoretical foundation for the Ramsey growth formula used in STPR derivation (`r = ρ + ηg`); pure time preference rate ρ and consumption elasticity η values referenced in Green Book Annex 6 |
+| **Full citation** | Stern, N. (2006). *Stern Review: The Economics of Climate Change*. Cambridge: Cambridge University Press. (Original government report: HM Treasury, October 2006.) |
+| **License** | Original HM Treasury report: **OGL v3** (Crown copyright, freely available). Cambridge University Press edition: **All rights reserved** (academic book copyright; citation free, reproduction requires CUP permission). |
+| **Commercial use** | OGL version: ✓ Yes. CUP edition: ✗ Restricted |
+| **Attribution required** | Yes — cite Stern 2006 |
+| **Redistribution** | OGL version: ✓ Free. CUP edition: ✗ Restricted |
+| **Note** | The original Treasury report is freely downloadable under OGL from HM Treasury archives. Cite the Treasury version for open-use compliance. |
+| **License URL** | https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/ (OGL); https://www.cambridge.org/core/books/economics-of-climate-change/A1E0BBF2F0ED8E2E4142A9C878052204 (CUP) |
+
+---
+
+### 4.4.6 NICE — QALY HTA Threshold
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | £20,000–£30,000/QALY NICE HTA benchmark used in culture model variants (Frontier 2024); calibrates one set of culture health benefit estimates |
+| **Full citation** | National Institute for Health and Care Excellence (NICE) (2013). *Guide to the methods of technology appraisal 2013*. NICE Process and Methods Guides. London: NICE. |
+| **License** | **NICE UK Open Content Licence** |
+| **Commercial use** | ✓ Free within UK (commercial and non-commercial); international commercial use requires fee and licensing agreement |
+| **Attribution required** | Yes — "© NICE [year]. All rights reserved. Content may be used within the UK without further permission from NICE." |
+| **Redistribution** | ✓ Permitted in UK under NICE UK Open Content Licence |
+| **License URL** | https://www.nice.org.uk/re-using-our-content; https://www.nice.org.uk/terms-and-conditions |
+
+---
+
+### 4.4.7 Taking Part Survey (DCMS) and ONS Population Data
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | Cultural engagement participation rates (engager count basis) for societal-level culture health estimates; ONS population denominators |
+| **Full citation** | DCMS (2024). *Taking Part Adult and Child Survey* (annual). London: DCMS. — ONS (annual). *Population Estimates for the UK*. Newport: ONS. |
+| **License** | **Open Government Licence v3.0 (OGL v3)** (both DCMS and ONS) |
+| **Commercial use** | ✓ Yes |
+| **Attribution required** | Yes — "Contains public sector information licensed under the Open Government Licence v3.0." |
+| **Redistribution** | ✓ Free |
+| **License URL** | https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/ |
+
+---
+
+### 4.4.8 ELSA — English Longitudinal Study of Ageing
+
+| Attribute | Detail |
+|---|---|
+| **Used for** | Epidemiological evidence base for mental health, depression, and dementia benefit estimates in culture models (regression inputs to Frontier 2024 model) |
+| **Full citation** | Banks, J. et al. (2024). *English Longitudinal Study of Ageing: Waves 0–11, 1998–2024* (SN 5050). UK Data Service. https://doi.org/10.5255/UKDA-SN-5050-22 |
+| **License** | **UK Data Service End User Licence (EUL)** — non-commercial academic and policy research |
+| **Commercial use** | ✗ Non-commercial research use only under EUL; some waves under Special Licence |
+| **Attribution required** | Yes — cite ELSA and UK Data Service (SN 5050) |
+| **Redistribution** | ✗ Raw data may not be redistributed; derived aggregated findings may be published |
+| **License URL** | https://www.elsa-project.ac.uk/accessing-elsa-data |
 
 ---
 
