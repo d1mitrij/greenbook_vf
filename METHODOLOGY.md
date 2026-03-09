@@ -4,37 +4,76 @@
 
 ---
 
-## 1. Source Documents
+## 1. Conceptual Foundation: Welfare Economics and Wellbeing Valuation
 
-### 1.1 HM Treasury — The Green Book (2026)
+### 1.1 Theoretical basis
+
+UK government value factors are grounded in **welfare economics** — the quantification
+of societal welfare change using monetary equivalents derived from stated or revealed
+preferences.
+
+| Concept | UK Wellbeing approach | Classical damage-cost (EPS, CE Delft) |
+|---|---|---|
+| Basis | Stated preference (WTP) + QALY/WELLBY | Damage cost (IPA) |
+| Unit | GBP/QALY or GBP/WELLBY | EUR/kg (per emission unit) |
+| Scope | UK-specific | EU27 or global |
+| Primary metric | Subjective wellbeing (LS 0–10 scale) | Physical emission → endpoint damage |
+| Reference | HM Treasury Green Book | ExternE / EEA; ReCiPe 2016 |
+
+### 1.2 WELLBY — Wellbeing-Adjusted Life Year
+
+The **WELLBY** is the primary unit introduced by HM Treasury (2021) for measuring
+subjective wellbeing in UK public sector appraisal:
+
+> One WELLBY = a change of one point on a 0–10 life satisfaction scale for one person
+> for one year.
+
+The central value of **£13,000/WELLBY** is derived as the midpoint between:
+- A QALY-anchored estimate (£10,000): £70,000 QALY ÷ 7 LS points/QALY
+- An income-anchored estimate (£16,000): £30,673 avg. earnings ÷ 1.96 log-income coefficient
+
+### 1.3 QALY — Quality-Adjusted Life Year
+
+The **QALY** is the established metric in health economics:
+- **Green Book welfare appraisal:** £70,000/QALY (2019) — primary for SCBA
+- **NICE HTA healthcare threshold:** £20,000–£30,000/QALY — health sector benchmark
+
+The relationship `1 QALY ≈ 7 WELLBYs` (Frijters & Krekel 2021) enables partial
+interoperability between the two metrics, though they are not equivalent in general.
+
+---
+
+## 2. Source Documents
+
+### 2.1 HM Treasury — The Green Book (2026)
 UK government framework for appraisal and evaluation of public spending decisions.
 Provides Social Time Preference Rates (STPR), distributional weights, treatment of
 uncertainty, and cross-references to supplementary guidance on health and wellbeing.
 
-### 1.2 HM Treasury — Wellbeing Guidance for Appraisal (July 2021)
+### 2.2 HM Treasury — Wellbeing Guidance for Appraisal (July 2021)
 Supplementary Green Book guidance introducing the WELLBY (Wellbeing-Adjusted Life Year)
 as the primary unit for monetising subjective wellbeing impacts in UK public policy appraisal.
 Provides the standard WELLBY value (£13,000, 2019 prices), derivation methodology,
 uprating formulas, and illustrative case studies.
 
-### 1.3 OECD — The WELLBY Well-being Valuation Method in the UK (2025)
+### 2.3 OECD — The WELLBY Well-being Valuation Method in the UK (2025)
 OECD documentation of the UK's adoption of the WELLBY method, confirming the standard
 value and describing international applicability. Reference: 60c1396c-en.
 
-### 1.4 Frontier Economics / DCMS — Health and Wellbeing Final Report (December 2024)
+### 2.4 Frontier Economics / DCMS — Health and Wellbeing Final Report (December 2024)
 Commissioned by the UK Department for Culture, Media and Sport. Monetises the health
 and wellbeing benefits of cultural and heritage engagement in England across 13 model
 variants covering four age groups, two valuation frameworks (QALY and WELLBY), and
 three impact dimensions (individual health, NHS savings, productivity).
 
-### 1.5 HM Treasury / PHE — Workplace Wellbeing Tool (December 2011)
+### 2.5 HM Treasury / PHE — Workplace Wellbeing Tool (December 2011)
 Interactive Excel calculator for quantifying the financial impact of employee health
 and wellbeing on organisations. Provides standard parameters, cost category definitions,
 and investment appraisal methodology using NPV, BCR, and IRR.
 
 ---
 
-## 2. Table Group Methodologies
+## 3. Table Group Methodologies
 
 ### Table 01 — WELLBY and QALY Unit Valuations
 
@@ -132,7 +171,64 @@ Standard UK workplace health and wellbeing cost calculation parameters:
 
 ---
 
-## 3. Relationship Between Value Factors
+## 4. Value Transfer Mechanism
+
+### 4.1 Temporal transfer — WELLBY uprating
+
+The WELLBY central value (£13,000) and QALY reference value (£70,000) are expressed
+at **2019 GBP price levels**. Applying these to other time periods requires an
+income-adjusted temporal value transfer:
+
+```
+WELLBY(t) = WELLBY(2019) × [GDP_deflator(t) / GDP_deflator(2019)]
+                          × [GDP_per_capita(t) / GDP_per_capita(2019)]^1.3
+```
+
+The exponent 1.3 is the **marginal utility of income elasticity** (HM Treasury Green
+Book Annex 3). The GDP-per-capita term accounts for real income growth — society
+is richer in future years, so a WELLBY is worth more in nominal terms.
+
+| Parameter | Value | Source |
+|---|---|---|
+| Income elasticity ε | 1.3 | HM Treasury Green Book Annex 3 |
+| GDP deflator data | ONS GDP deflator series | HM Treasury |
+| GDP per capita data | ONS National Accounts | HM Treasury |
+
+For large wellbeing changes (>0.5 life-satisfaction points), a Compensating Surplus
+formula replaces linear scaling to avoid overestimation of non-marginal changes.
+
+### 4.2 Geographic transfer (OECD guidance)
+
+The OECD (2025) document 60c1396c-en provides guidance for transferring WELLBY values
+to other countries using:
+
+```
+WELLBY_country = WELLBY_UK × (GDP_per_capita_country / GDP_per_capita_UK)^ε
+```
+
+This is not implemented in this pipeline — the extracted values are the **UK reference
+values** intended to serve as the unit transfer value for subsequent applications.
+
+### 4.3 No transfer between QALYs and WELLBYs
+
+The stated relationship `1 QALY ≈ 7 WELLBYs` is a calibration based on welfare
+research (Frijters & Krekel 2021), not a direct transfer. The Green Book uses QALY
+(£70,000) and WELLBY (£13,000) as two parallel but distinct metrics — they should
+not be freely substituted without methodological justification.
+
+### 4.4 External sources per indicator
+
+| Table group | Value technique | Primary external sources |
+|---|---|---|
+| `wellby_valuations` | Stated preference (WTP) + QALY anchor | OECD (2025) 60c1396c-en; Frijters & Krekel (2021); Fujiwara (2021) |
+| `discount_rates` | Social Time Preference Rate (Ramsey formula) | HM Treasury Green Book 2026; Stern (2006) |
+| `culture_health_per_person` | QALY: NICE/Green Book threshold; WELLBY: regression | NICE HTA; Taking Part Survey (DCMS); ELSA (IFS); regression models from English surveys |
+| `culture_health_societal` | Per-person × population count | Taking Part Survey; ELSA; ONS population data |
+| `workplace_wellbeing` | Cost accounting (NPV/BCR/IRR) | ONS labour statistics; NICE workplace evidence |
+
+---
+
+## 5. Relationship Between Value Factors
 
 ```
 WELLBY (£13,000) ←── derived from ──→ QALY (£70,000)
@@ -147,7 +243,7 @@ Workplace tool (Table 05):          Cost per day absent = wage/228
 
 ---
 
-## 4. Price Levels and Currency
+## 6. Price Levels and Currency
 
 | Table group | Currency | Price year | Notes |
 |-------------|----------|------------|-------|
@@ -159,7 +255,7 @@ Workplace tool (Table 05):          Cost per day absent = wage/228
 
 ---
 
-## 5. Citation
+## 7. Citation
 
 When using these value factors in research or policy analysis, cite the original sources:
 

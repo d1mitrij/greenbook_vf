@@ -58,13 +58,13 @@ python tables/01_wellby_valuations.py                    # single table
 
 ## Table Groups
 
-| ID | Key | Source | Description | Rows | Unit |
-|----|-----|--------|-------------|------|------|
-| 01 | `wellby_valuations` | Wellbeing Guidance 2021; OECD 2025 | WELLBY, QALY unit values + case study event valuations | 19 | GBP 2019/unit |
-| 02 | `discount_rates` | Green Book 2026 | STPR by time period + health discount rate | 8 | % real |
-| 03 | `culture_health_per_person` | Frontier / DCMS 2024 | Per-person annual benefits from cultural engagement (15 model-variants) | 15 | GBP 2024/person/year |
-| 04 | `culture_health_societal` | Frontier / DCMS 2024 | Society-wide annual benefits + engager numbers (13 models) | 13 | GBP 2024/year |
-| 05 | `workplace_wellbeing` | Workplace Wellbeing Tool 2011 | Standard parameters, cost benchmarks, appraisal example results | 17 | GBP 2011/unit |
+| ID | Key | Source | Description | Rows | Unit | External sources |
+|----|-----|--------|-------------|------|------|-----------------|
+| 01 | `wellby_valuations` | HM Treasury WBG 2021; OECD 2025 | WELLBY, QALY unit values + case study event valuations | 19 | GBP 2019/unit | OECD (2025) WELLBY method; Frijters & Krekel (2021); Fujiwara (2021) |
+| 02 | `discount_rates` | Green Book 2026 | STPR by time period + health discount rate | 8 | % real | HM Treasury Green Book 2026 Annex 6 |
+| 03 | `culture_health_per_person` | Frontier / DCMS 2024 | Per-person annual benefits from cultural engagement (15 model-variants) | 15 | GBP 2024/person/year | NICE clinical guidelines; Taking Part Survey; ELSA; NICE HTA thresholds |
+| 04 | `culture_health_societal` | Frontier / DCMS 2024 | Society-wide annual benefits + engager numbers (13 models) | 13 | GBP 2024/year | Taking Part Survey (DCMS); ELSA (IFS) |
+| 05 | `workplace_wellbeing` | Workplace Wellbeing Tool 2011 | Standard parameters, cost benchmarks, appraisal example results | 17 | GBP 2011/unit | PHE / HM Treasury; NICE workplace wellbeing evidence |
 
 **Total: 72 value factor rows**
 
@@ -138,6 +138,49 @@ vf_uk/
 | Daily organised arts (18–29) | £1,240/person/year |
 | General engagement & health (30–49) | £992/person/year |
 | Museums and dementia (50+) | £369/person/year |
+
+---
+
+## Value Transfer Mechanism
+
+**No classical value transfer is applied.** All values are UK-specific and derived
+directly from UK government and national research sources.
+
+However, the **WELLBY uprating formula** constitutes a structured temporal transfer
+mechanism — it converts 2019 GBP values to other price years using income-adjusted
+welfare weights:
+
+```
+WELLBY(t) = WELLBY(2019) × [GDP_deflator(t) / GDP_deflator(2019)]
+                          × [GDP_per_capita(t) / GDP_per_capita(2019)]^1.3
+```
+
+where `1.3` is the marginal utility of income elasticity (HM Treasury Green Book
+Annex 3). This follows the OECD (2025) guidance for international comparisons of
+WELLBY values.
+
+**For international transfer:** The OECD WELLBY documentation (60c1396c-en)
+provides guidance on applying income elasticity adjustments to transfer UK WELLBY
+values to other countries. Such transfers are not implemented in this pipeline —
+the extracted values are the UK reference values that serve as the starting point
+for any subsequent transfer.
+
+---
+
+## Relation to transitionvaluation
+
+| transitionvaluation convention | This project |
+|---|---|
+| `config.py` → table group definitions | ✓ `TABLE_GROUPS` dict |
+| `pipeline.run_table(key)` | ✓ identical signature |
+| Orchestrator script with `--only` / `--list` | ✓ `extract_uk_values.py` |
+| CSV (UTF-8, tidy/long format) + Excel output | ✓ same output pattern |
+| Timestamped execution log | ✓ `execution_log_*.txt` |
+| `Metadata` sheet in Excel | ✓ with full publication attribution |
+
+Like CE Delft, this project produces **flat CSV/Excel tables** rather than
+`(Year, Variable) × (GeoRegion, NACE)` coefficient matrices. The UK values are
+expressed in GBP, not EUR, and do not carry a country × sector structure.
 
 ---
 
